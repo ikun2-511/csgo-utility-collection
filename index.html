@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CS:GO 道具合集</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="landing">
+    <header class="landing-header">
+      <h1>CS:GO 道具合集</h1>
+      <p>竞技地图道具投掷指南</p>
+    </header>
+
+    <main class="map-grid" id="mapGrid">
+      <!-- JS 动态渲染 -->
+    </main>
+
+    <footer class="landing-footer">
+      <p>持续更新中</p>
+    </footer>
+  </div>
+
+  <!-- 添加地图弹窗 -->
+  <div class="modal" id="addMapModal">
+    <div class="modal-content modal-form">
+      <button class="modal-close" onclick="document.getElementById('addMapModal').classList.remove('active');document.body.style.overflow=''">✕</button>
+      <h2>添加新地图</h2>
+      <form id="addMapForm" onsubmit="return false">
+        <div class="form-row">
+          <label>地图中文名 *</label>
+          <input type="text" id="newMapName" placeholder="例如：荒漠迷城" required>
+        </div>
+        <div class="form-row">
+          <label>地图英文名 *</label>
+          <input type="text" id="newMapEn" placeholder="例如：Mirage" required>
+        </div>
+        <div class="form-row">
+          <label>地图俯视图</label>
+          <div class="file-upload">
+            <input type="file" id="newMapOverview" accept="image/*">
+            <span class="file-upload-label">选择图片</span>
+          </div>
+        </div>
+        <button type="button" class="submit-btn" onclick="new App().handleAddMap()">添加</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

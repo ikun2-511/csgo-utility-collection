@@ -1,0 +1,211 @@
+{
+  "map": "de_dust2",
+  "name": "炙热沙城2",
+  "nameEn": "Dust2",
+  "spots": [
+    {
+      "id": "smoke-a-long",
+      "name": "A大烟",
+      "type": "smoke",
+      "side": "ct",
+      "difficulty": 2,
+      "description": "封锁A大门视野，配合队友从A大推进",
+      "lineup": {
+        "stand": "A大箱子后方",
+        "aim": "对准远处天线顶部",
+        "throw": "普通投掷"
+      },
+      "images": {
+        "lineup": "images/dust2/smoke-a-long-lineup.jpg",
+        "result": "images/dust2/smoke-a-long-result.jpg"
+      }
+    },
+    {
+      "id": "smoke-a-site",
+      "name": "A平台烟",
+      "type": "smoke",
+      "side": "t",
+      "difficulty": 1,
+      "description": "封锁A平台视野，适合A小进攻时使用",
+      "lineup": {
+        "stand": "A小入口",
+        "aim": "对准A平台边缘",
+        "throw": "普通投掷"
+      },
+      "images": {
+        "lineup": "images/dust2/smoke-a-site-lineup.jpg",
+        "result": "images/dust2/smoke-a-site-result.jpg"
+      }
+    },
+    {
+      "id": "smoke-a-short",
+      "name": "A小烟",
+      "type": "smoke",
+      "side": "t",
+      "difficulty": 2,
+      "description": "封锁A小通道视野，防止CT从A小回防",
+      "lineup": {
+        "stand": "中路沙袋",
+        "aim": "对准A小墙壁上方",
+        "throw": "跳投"
+      },
+      "images": {
+        "lineup": "images/dust2/smoke-a-short-lineup.jpg",
+        "result": "images/dust2/smoke-a-short-result.jpg"
+      }
+    },
+    {
+      "id": "smoke-mid",
+      "name": "中路烟",
+      "type": "smoke",
+      "side": "t",
+      "difficulty": 1,
+      "description": "封锁中路视野，保护队友从中路推进或转点",
+      "lineup": {
+        "stand": "T出生点附近",
+        "aim": "对准中路箱子顶部",
+        "throw": "普通投掷"
+      },
+      "images": {
+        "lineup": "images/dust2/smoke-mid-lineup.jpg",
+        "result": "images/dust2/smoke-mid-result.jpg"
+      }
+    },
+    {
+      "id": "smoke-b-door",
+      "name": "B门烟",
+      "type": "smoke",
+      "side": "t",
+      "difficulty": 1,
+      "description": "封锁B门视野，配合队友从B洞进攻B点",
+      "lineup": {
+        "stand": "B洞入口",
+        "aim": "对准B门上方",
+        "throw": "普通投掷"
+      },
+      "images": {
+        "lineup": "images/dust2/smoke-b-door-lineup.jpg",
+        "result": "images/dust2/smoke-b-door-result.jpg"
+      }
+    },
+    {
+      "id": "flash-a-long",
+      "name": "A大闪",
+      "type": "flash",
+      "side": "t",
+      "difficulty": 1,
+      "description": "配合队友出A大门时使用，闪白A大门防守的CT",
+      "lineup": {
+        "stand": "A大门内侧",
+        "aim": "对准A大门上方",
+        "throw": "反弹投掷"
+      },
+      "images": {
+        "lineup": "images/dust2/flash-a-long-lineup.jpg",
+        "result": "images/dust2/flash-a-long-result.jpg"
+      }
+    },
+    {
+      "id": "flash-a-short",
+      "name": "A小闪",
+      "type": "flash",
+      "side": "t",
+      "difficulty": 2,
+      "description": "配合队友出A小时使用，闪白A小防守的CT",
+      "lineup": {
+        "stand": "A小入口",
+        "aim": "对准A小墙壁",
+        "throw": "反弹投掷"
+      },
+      "images": {
+        "lineup": "images/dust2/flash-a-short-lineup.jpg",
+        "result": "images/dust2/flash-a-short-result.jpg"
+      }
+    },
+    {
+      "id": "flash-b-tunnel",
+      "name": "B洞闪",
+      "type": "flash",
+      "side": "t",
+      "difficulty": 1,
+      "description": "配合队友出B洞时使用，闪白B洞口防守的CT",
+      "lineup": {
+        "stand": "B洞内",
+        "aim": "对准B洞出口上方",
+        "throw": "普通投掷"
+      },
+      "images": {
+        "lineup": "images/dust2/flash-b-tunnel-lineup.jpg",
+        "result": "images/dust2/flash-b-tunnel-result.jpg"
+      }
+    },
+    {
+      "id": "molotov-a-site",
+      "name": "A平台火",
+      "type": "molotov",
+      "side": "t",
+      "difficulty": 2,
+      "description": "逼出A平台箱子后躲藏的CT，配合烟雾使用效果更佳",
+      "lineup": {
+        "stand": "A小平台",
+        "aim": "对准A平台箱子顶部",
+        "throw": "跳投"
+      },
+      "images": {
+        "lineup": "images/dust2/molotov-a-site-lineup.jpg",
+        "result": "images/dust2/molotov-a-site-result.jpg"
+      }
+    },
+    {
+      "id": "molotov-b-site",
+      "name": "B包点火",
+      "type": "molotov",
+      "side": "t",
+      "difficulty": 2,
+      "description": "逼出B包点箱子后躲藏的CT，适合B洞进攻时使用",
+      "lineup": {
+        "stand": "B洞出口",
+        "aim": "对准B包点中央",
+        "throw": "普通投掷"
+      },
+      "images": {
+        "lineup": "images/dust2/molotov-b-site-lineup.jpg",
+        "result": "images/dust2/molotov-b-site-result.jpg"
+      }
+    },
+    {
+      "id": "he-a-long",
+      "name": "A门雷",
+      "type": "he",
+      "side": "t",
+      "difficulty": 1,
+      "description": "进A门时先丢雷消耗，配合闪光弹效果更佳",
+      "lineup": {
+        "stand": "A大门外",
+        "aim": "对准A大门内",
+        "throw": "普通投掷"
+      },
+      "images": {
+        "lineup": "images/dust2/he-a-long-lineup.jpg",
+        "result": "images/dust2/he-a-long-result.jpg"
+      }
+    },
+    {
+      "id": "he-b-tunnel",
+      "name": "B洞雷",
+      "type": "he",
+      "side": "t",
+      "difficulty": 1,
+      "description": "进B洞时先丢雷消耗，清理B洞内可能躲藏的CT",
+      "lineup": {
+        "stand": "B洞入口",
+        "aim": "对准B洞深处",
+        "throw": "普通投掷"
+      },
+      "images": {
+        "lineup": "images/dust2/he-b-tunnel-lineup.jpg",
+        "result": "images/dust2/he-b-tunnel-result.jpg"
+      }
+    }
+  ]
+}

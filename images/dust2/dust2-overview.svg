@@ -1,0 +1,164 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 625">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2d2d44"/>
+      <stop offset="100%" style="stop-color:#1a1a2e"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- 背景 -->
+  <rect width="1000" height="625" fill="url(#bg)"/>
+
+  <!-- 网格线 -->
+  <g stroke="#2a2a4a" stroke-width="0.5" opacity="0.5">
+    <line x1="0" y1="125" x2="1000" y2="125"/>
+    <line x1="0" y1="250" x2="1000" y2="250"/>
+    <line x1="0" y1="375" x2="1000" y2="375"/>
+    <line x1="0" y1="500" x2="1000" y2="500"/>
+    <line x1="200" y1="0" x2="200" y2="625"/>
+    <line x1="400" y1="0" x2="400" y2="625"/>
+    <line x1="600" y1="0" x2="600" y2="625"/>
+    <line x1="800" y1="0" x2="800" y2="625"/>
+  </g>
+
+  <!-- ===== 地图区域 ===== -->
+
+  <!-- T家 (T Spawn) -->
+  <rect x="30" y="220" width="140" height="185" rx="8" fill="#3d3555" stroke="#5a4a7a" stroke-width="2"/>
+  <text x="100" y="300" text-anchor="middle" fill="#b39ddb" font-size="16" font-weight="bold">T家</text>
+  <text x="100" y="320" text-anchor="middle" fill="#7e6baa" font-size="11">T Spawn</text>
+
+  <!-- A大 (Long A) -->
+  <rect x="200" y="30" width="420" height="80" rx="8" fill="#4a3d3d" stroke="#7a5a5a" stroke-width="2"/>
+  <text x="410" y="65" text-anchor="middle" fill="#ef9a9a" font-size="16" font-weight="bold">A大</text>
+  <text x="410" y="85" text-anchor="middle" fill="#c07070" font-size="11">Long A</text>
+
+  <!-- A门 (Long Doors) -->
+  <rect x="160" y="130" width="100" height="70" rx="6" fill="#4a4040" stroke="#6a5555" stroke-width="1.5"/>
+  <text x="210" y="165" text-anchor="middle" fill="#d4a0a0" font-size="13" font-weight="bold">A门</text>
+  <text x="210" y="180" text-anchor="middle" fill="#a07070" font-size="9">Long Doors</text>
+
+  <!-- 蓝箱 (Blue Bin) -->
+  <rect x="290" y="55" width="70" height="45" rx="4" fill="#3d4a5a" stroke="#5a6a8a" stroke-width="1"/>
+  <text x="325" y="82" text-anchor="middle" fill="#90caf9" font-size="11">蓝箱</text>
+
+  <!-- 坑 (Pit) -->
+  <rect x="550" y="55" width="60" height="45" rx="4" fill="#4a3d5a" stroke="#6a5a8a" stroke-width="1"/>
+  <text x="580" y="82" text-anchor="middle" fill="#b39ddb" font-size="11">坑</text>
+  <text x="580" y="95" text-anchor="middle" fill="#8a7aaa" font-size="9">Pit</text>
+
+  <!-- A平台 (A Site) -->
+  <rect x="680" y="30" width="160" height="130" rx="8" fill="#5a3535" stroke="#8a4a4a" stroke-width="2"/>
+  <text x="760" y="85" text-anchor="middle" fill="#ff8a80" font-size="20" font-weight="bold">A</text>
+  <text x="760" y="105" text-anchor="middle" fill="#d45a5a" font-size="12">A Site</text>
+  <text x="760" y="125" text-anchor="middle" fill="#a04040" font-size="10">A平台</text>
+
+  <!-- A小 (Short A / Catwalk) -->
+  <rect x="580" y="180" width="90" height="180" rx="6" fill="#4a4a3d" stroke="#6a6a5a" stroke-width="1.5"/>
+  <text x="625" y="260" text-anchor="middle" fill="#c5e1a5" font-size="14" font-weight="bold">A小</text>
+  <text x="625" y="280" text-anchor="middle" fill="#9aaa7a" font-size="10">Short A</text>
+  <text x="625" y="300" text-anchor="middle" fill="#7a8a5a" font-size="9">Catwalk</text>
+
+  <!-- 中路 (Mid) -->
+  <rect x="350" y="250" width="180" height="120" rx="8" fill="#3d4a4a" stroke="#5a7a7a" stroke-width="2"/>
+  <text x="440" y="305" text-anchor="middle" fill="#80cbc4" font-size="16" font-weight="bold">中路</text>
+  <text x="440" y="325" text-anchor="middle" fill="#5a9a9a" font-size="11">Mid</text>
+
+  <!-- 中门 (Mid Doors) -->
+  <rect x="370" y="200" width="80" height="40" rx="4" fill="#3d4a5a" stroke="#5a6a8a" stroke-width="1"/>
+  <text x="410" y="225" text-anchor="middle" fill="#80deea" font-size="11">中门</text>
+
+  <!-- Xbox -->
+  <rect x="500" y="220" width="60" height="40" rx="4" fill="#4a4a3d" stroke="#6a6a5a" stroke-width="1"/>
+  <text x="530" y="245" text-anchor="middle" fill="#dce775" font-size="11">Xbox</text>
+
+  <!-- 沙袋 (Mid Sandbags) -->
+  <rect x="350" y="170" width="70" height="35" rx="4" fill="#4a4040" stroke="#6a5555" stroke-width="1"/>
+  <text x="385" y="192" text-anchor="middle" fill="#ffcc80" font-size="10">沙袋</text>
+
+  <!-- B洞 (Tunnels) -->
+  <rect x="120" y="430" width="180" height="100" rx="8" fill="#3d3d5a" stroke="#5a5a8a" stroke-width="2"/>
+  <text x="210" y="475" text-anchor="middle" fill="#9fa8da" font-size="16" font-weight="bold">B洞</text>
+  <text x="210" y="495" text-anchor="middle" fill="#7a85b0" font-size="11">Tunnels</text>
+
+  <!-- B洞出口 -->
+  <rect x="230" y="380" width="80" height="40" rx="4" fill="#3d4a5a" stroke="#5a6a8a" stroke-width="1"/>
+  <text x="270" y="405" text-anchor="middle" fill="#b0bec5" font-size="10">B洞出口</text>
+
+  <!-- B点 (B Site) -->
+  <rect x="50" y="340" width="160" height="130" rx="8" fill="#354a5a" stroke="#4a6a8a" stroke-width="2"/>
+  <text x="130" y="395" text-anchor="middle" fill="#64b5f6" font-size="20" font-weight="bold">B</text>
+  <text x="130" y="415" text-anchor="middle" fill="#4a8ab0" font-size="12">B Site</text>
+  <text x="130" y="435" text-anchor="middle" fill="#3a7090" font-size="10">B包点</text>
+
+  <!-- B门 (B Doors) -->
+  <rect x="230" y="340" width="80" height="50" rx="4" fill="#3d4a5a" stroke="#5a6a8a" stroke-width="1.5"/>
+  <text x="270" y="370" text-anchor="middle" fill="#90caf9" font-size="12">B门</text>
+  <text x="270" y="385" text-anchor="middle" fill="#6a8ab0" font-size="9">B Doors</text>
+
+  <!-- B窗 (B Window) -->
+  <rect x="230" y="400" width="80" height="35" rx="4" fill="#4a4a5a" stroke="#6a6a8a" stroke-width="1"/>
+  <text x="270" y="422" text-anchor="middle" fill="#b39ddb" font-size="10">B窗</text>
+
+  <!-- CT家 (CT Spawn) -->
+  <rect x="800" y="430" width="140" height="140" rx="8" fill="#354a4a" stroke="#4a6a6a" stroke-width="2"/>
+  <text x="870" y="495" text-anchor="middle" fill="#80cbc4" font-size="16" font-weight="bold">CT家</text>
+  <text x="870" y="515" text-anchor="middle" fill="#5a9a9a" font-size="11">CT Spawn</text>
+
+  <!-- CT中路 (CT Mid) -->
+  <rect x="700" y="350" width="80" height="80" rx="6" fill="#3d4a4a" stroke="#5a7a7a" stroke-width="1.5"/>
+  <text x="740" y="390" text-anchor="middle" fill="#a5d6a7" font-size="11">CT中路</text>
+  <text x="740" y="405" text-anchor="middle" fill="#7aaa8a" font-size="9">CT Mid</text>
+
+  <!-- ===== 连接通道 ===== -->
+
+  <!-- T家 → A大 -->
+  <line x1="170" y1="280" x2="200" y2="70" stroke="#5a4a6a" stroke-width="3" stroke-dasharray="8,4"/>
+
+  <!-- A大 → A平台 -->
+  <line x1="620" y1="70" x2="680" y2="80" stroke="#6a4a4a" stroke-width="3" stroke-dasharray="8,4"/>
+
+  <!-- A小 → A平台 -->
+  <line x1="625" y1="180" x2="680" y2="120" stroke="#5a6a4a" stroke-width="3" stroke-dasharray="8,4"/>
+
+  <!-- 中路 → A小 -->
+  <line x1="530" y1="280" x2="580" y2="260" stroke="#4a6a5a" stroke-width="2" stroke-dasharray="6,4"/>
+
+  <!-- T家 → B洞 -->
+  <line x1="100" y1="405" x2="120" y2="460" stroke="#4a4a6a" stroke-width="3" stroke-dasharray="8,4"/>
+
+  <!-- B洞 → B点 -->
+  <line x1="120" y1="460" x2="160" y2="400" stroke="#4a5a6a" stroke-width="3" stroke-dasharray="8,4"/>
+
+  <!-- B门 → B点 -->
+  <line x1="230" y1="365" x2="210" y2="380" stroke="#5a5a7a" stroke-width="2" stroke-dasharray="6,4"/>
+
+  <!-- 中路 → 中门 -->
+  <line x1="440" y1="250" x2="410" y2="240" stroke="#5a7a7a" stroke-width="2" stroke-dasharray="6,4"/>
+
+  <!-- CT家 → A平台 -->
+  <line x1="800" y1="450" x2="800" y2="160" stroke="#5a5a6a" stroke-width="2" stroke-dasharray="8,4"/>
+
+  <!-- CT家 → B点 -->
+  <line x1="800" y1="480" x2="210" y2="430" stroke="#5a5a6a" stroke-width="2" stroke-dasharray="8,4"/>
+
+  <!-- ===== 图例 ===== -->
+  <g transform="translate(20, 560)">
+    <rect x="0" y="0" width="280" height="55" rx="6" fill="#1a1a2e" stroke="#3a3a5a" stroke-width="1" opacity="0.9"/>
+    <circle cx="25" cy="18" r="8" fill="#4fc3f7"/>
+    <text x="40" y="22" fill="#aaa" font-size="11">烟雾弹 Smoke</text>
+    <circle cx="130" cy="18" r="8" fill="#ffd54f"/>
+    <text x="145" y="22" fill="#aaa" font-size="11">闪光弹 Flash</text>
+    <circle cx="25" cy="40" r="8" fill="#ff8a65"/>
+    <text x="40" y="44" fill="#aaa" font-size="11">燃烧弹 Molotov</text>
+    <circle cx="130" cy="40" r="8" fill="#ef5350"/>
+    <text x="145" y="44" fill="#aaa" font-size="11">HE手雷</text>
+  </g>
+
+  <!-- 标题 -->
+  <text x="500" y="605" text-anchor="middle" fill="#555" font-size="11">Dust2 炙热沙城2 — 中文报点图</text>
+</svg>
