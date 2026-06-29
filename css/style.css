@@ -68,9 +68,9 @@ button { cursor: pointer; font-family: inherit; }
 .map-card {
   background: var(--bg-card);
   border-radius: var(--radius);
-  padding: 1.5rem;
   border: 1px solid var(--border);
   transition: all 0.2s;
+  overflow: hidden;
 }
 
 .map-card:hover {
@@ -78,9 +78,34 @@ button { cursor: pointer; font-family: inherit; }
   transform: translateY(-2px);
 }
 
-.map-card h2 { font-size: 1.2rem; margin-bottom: 0.3rem; }
-.map-card .sub { color: var(--text-dim); font-size: 0.9rem; }
-.map-card .count { color: var(--accent); font-size: 0.85rem; margin-top: 0.8rem; display: block; }
+.map-card-image {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #252535;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.map-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.map-card-image .placeholder {
+  color: var(--text-dim);
+  font-size: 2rem;
+}
+
+.map-card-body {
+  padding: 1rem;
+}
+
+.map-card-body h2 { font-size: 1.1rem; margin-bottom: 0.2rem; }
+.map-card-body .sub { color: var(--text-dim); font-size: 0.85rem; }
+.map-card-body .count { color: var(--accent); font-size: 0.8rem; margin-top: 0.5rem; display: block; }
 
 .map-card.coming-soon {
   opacity: 0.5;
@@ -377,6 +402,11 @@ button { cursor: pointer; font-family: inherit; }
   color: var(--text-dim);
   min-width: 35px;
   font-size: 0.9rem;
+}
+
+/* ========== 首页地图卡片链接 ========== */
+a.map-card {
+  display: block;
 }
 
 /* ========== 添加按钮 ========== */

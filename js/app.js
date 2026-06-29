@@ -73,12 +73,21 @@ class App {
   }
 
   renderMaps(grid, maps) {
-    grid.innerHTML = maps.map(m => `
-      ${m.ready
-        ? `<a href="${m.id}.html" class="map-card"><h2>${m.name}</h2><div class="sub">${m.en}</div></a>`
-        : `<div class="map-card coming-soon"><h2>${m.name}</h2><div class="sub">${m.en}</div></div>`
-      }
-    `).join('') + `
+    grid.innerHTML = maps.map(m => {
+      const imageHtml = m.overview
+        ? `<img src="${m.overview}" alt="${m.name}">`
+        : `<div class="placeholder">🗺</div>`;
+      const body = `
+        <div class="map-card-image">${imageHtml}</div>
+        <div class="map-card-body">
+          <h2>${m.name}</h2>
+          <div class="sub">${m.en}</div>
+        </div>
+      `;
+      return m.ready
+        ? `<a href="${m.id}.html" class="map-card">${body}</a>`
+        : `<div class="map-card coming-soon">${body}</div>`;
+    }).join('') + `
       <div class="map-card add-card" id="addMapCard">
         <div class="add-icon">+</div>
         <div class="add-text">添加新地图</div>
