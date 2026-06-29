@@ -66,6 +66,13 @@ class App {
 
   saveMaps(maps) { this.saveData('maps', maps); }
 
+  bindAddMap() {
+    setTimeout(() => {
+      const addCard = document.getElementById('addMapCard');
+      if (addCard) addCard.addEventListener('click', () => this.showAddMapModal());
+    }, 50);
+  }
+
   // ========== 首页 ==========
   initIndex() {
     const grid = document.getElementById('mapGrid');
@@ -145,7 +152,6 @@ class App {
       document.getElementById('addMapModal').classList.remove('active');
       document.body.style.overflow = '';
       this.renderMaps(document.getElementById('mapGrid'), maps);
-      this.bindAddMap(document.getElementById('mapGrid'));
     };
 
     if (file) {
