@@ -163,7 +163,8 @@ class App {
     const map = maps.find(m => m.id === mapId);
     if (!map) return;
 
-    this.editingMapId = mapId;
+    // 存到 DOM 上，避免丢失
+    document.getElementById('editMapModal').dataset.mapId = mapId;
     document.getElementById('editMapName').value = map.name;
     document.getElementById('editMapEn').value = map.en;
     document.getElementById('editMapModal').classList.add('active');
@@ -175,8 +176,9 @@ class App {
     const en = document.getElementById('editMapEn').value.trim();
     if (!name || !en) { alert('请填写地图名称'); return; }
 
+    const mapId = document.getElementById('editMapModal').dataset.mapId;
     const maps = this.loadMaps();
-    const index = maps.findIndex(m => m.id === this.editingMapId);
+    const index = maps.findIndex(m => m.id === mapId);
     if (index === -1) return;
 
     const file = document.getElementById('editMapOverview').files[0];
