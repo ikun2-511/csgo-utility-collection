@@ -39,8 +39,11 @@
         <div class="form-row">
           <label>地图图标</label>
           <div class="file-upload">
-            <input type="file" id="newMapOverview" accept="image/*">
+            <input type="file" id="newMapOverview" accept="image/*" onchange="previewImage(this, 'newMapPreview')">
             <span class="file-upload-label">选择图片</span>
+          </div>
+          <div class="image-preview" id="newMapPreview" style="display:none">
+            <img src="" alt="预览">
           </div>
         </div>
         <button type="button" class="submit-btn" onclick="appInstance.handleAddMap()">添加</button>
@@ -65,8 +68,11 @@
         <div class="form-row">
           <label>更换图标（不选则保留原图标）</label>
           <div class="file-upload">
-            <input type="file" id="editMapOverview" accept="image/*">
+            <input type="file" id="editMapOverview" accept="image/*" onchange="previewImage(this, 'editMapPreview')">
             <span class="file-upload-label">选择图片</span>
+          </div>
+          <div class="image-preview" id="editMapPreview" style="display:none">
+            <img src="" alt="预览">
           </div>
         </div>
         <button type="button" class="submit-btn" onclick="appInstance.handleEditMap()">保存</button>
@@ -74,6 +80,22 @@
     </div>
   </div>
 
+  <script>
+    function previewImage(input, previewId) {
+      const preview = document.getElementById(previewId);
+      const img = preview.querySelector('img');
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          img.src = e.target.result;
+          preview.style.display = 'block';
+        };
+        reader.readAsDataURL(input.files[0]);
+      } else {
+        preview.style.display = 'none';
+      }
+    }
+  </script>
   <script src="js/app.js?v=3"></script>
 </body>
 </html>

@@ -644,6 +644,20 @@ a.map-card {
   filter: brightness(1.1);
 }
 
+/* ========== 图片预览 ========== */
+.image-preview {
+  margin-top: 0.8rem;
+  text-align: center;
+}
+
+.image-preview img {
+  max-width: 120px;
+  max-height: 120px;
+  border-radius: 8px;
+  border: 2px solid var(--border);
+  object-fit: contain;
+}
+
 /* ========== 响应式 ========== */
 @media (max-width: 600px) {
   .landing { padding: 2rem 1rem; }
