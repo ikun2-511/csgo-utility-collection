@@ -181,26 +181,28 @@ class App {
     const index = maps.findIndex(m => m.id === mapId);
     if (index === -1) return;
 
-    const file = document.getElementById('editMapOverview').files[0];
-    const updateMap = (overview) => {
-      maps[index] = {
-        ...maps[index],
-        name,
-        en,
-        overview: overview || maps[index].overview
+    const fileInput = document.getElementById('editMapOverview');
+    const file = fileInput.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        maps[index].name = name;
+        maps[index].en = en;
+        maps[index].overview = e.target.result;
+        appInstance.saveMaps(maps);
+        document.getElementById('editMapModal').classList.remove('active');
+        document.body.style.overflow = '';
+        appInstance.renderMaps(document.getElementById('mapGrid'), maps);
       };
+      reader.readAsDataURL(file);
+    } else {
+      maps[index].name = name;
+      maps[index].en = en;
       this.saveMaps(maps);
       document.getElementById('editMapModal').classList.remove('active');
       document.body.style.overflow = '';
       this.renderMaps(document.getElementById('mapGrid'), maps);
-    };
-
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => updateMap(e.target.result);
-      reader.readAsDataURL(file);
-    } else {
-      updateMap('');
     }
   }
 
