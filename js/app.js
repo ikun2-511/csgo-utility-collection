@@ -177,32 +177,39 @@ class App {
     if (!name || !en) { alert('请填写地图名称'); return; }
 
     const mapId = document.getElementById('editMapModal').dataset.mapId;
+    if (!mapId) { alert('未找到地图ID'); return; }
+
     const maps = this.loadMaps();
     const index = maps.findIndex(m => m.id === mapId);
-    if (index === -1) return;
+    if (index === -1) { alert('未找到地图'); return; }
 
     const fileInput = document.getElementById('editMapOverview');
     const file = fileInput.files[0];
 
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        maps[index].name = name;
-        maps[index].en = en;
-        maps[index].overview = e.target.result;
-        appInstance.saveMaps(maps);
-        document.getElementById('editMapModal').classList.remove('active');
-        document.body.style.overflow = '';
-        appInstance.renderMaps(document.getElementById('mapGrid'), maps);
+    const doSave = (overviewData) => {
+      // 创建新对象而不是修改原对象
+      const updated = {
+        id: maps[index].id,
+        name: name,
+        en: en,
+        overview: overviewData || maps[index].overview || '',
+        ready: maps[index].ready
       };
-      reader.readAsDataURL(file);
-    } else {
-      maps[index].name = name;
-      maps[index].en = en;
+      maps[index] = updated;
       this.saveMaps(maps);
       document.getElementById('editMapModal').classList.remove('active');
+      document.getElementById('editMapOverview').value = '';
       document.body.style.overflow = '';
       this.renderMaps(document.getElementById('mapGrid'), maps);
+    };
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => doSave(e.target.result);
+      reader.onerror = () => alert('读取图片失败');
+      reader.readAsDataURL(file);
+    } else {
+      doSave('');
     }
   }
 
