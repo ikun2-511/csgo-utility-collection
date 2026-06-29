@@ -37,7 +37,7 @@
           <input type="text" id="newMapEn" placeholder="例如：Mirage" required>
         </div>
         <div class="form-row">
-          <label>地图俯视图</label>
+          <label>地图图标</label>
           <div class="file-upload">
             <input type="file" id="newMapOverview" accept="image/*">
             <span class="file-upload-label">选择图片</span>
@@ -48,6 +48,32 @@
     </div>
   </div>
 
-  <script src="js/app.js?v=2"></script>
+  <!-- 编辑地图弹窗 -->
+  <div class="modal" id="editMapModal">
+    <div class="modal-content modal-form">
+      <button class="modal-close" onclick="document.getElementById('editMapModal').classList.remove('active');document.body.style.overflow=''">✕</button>
+      <h2>编辑地图</h2>
+      <form id="editMapForm" onsubmit="return false">
+        <div class="form-row">
+          <label>地图中文名 *</label>
+          <input type="text" id="editMapName" required>
+        </div>
+        <div class="form-row">
+          <label>地图英文名 *</label>
+          <input type="text" id="editMapEn" required>
+        </div>
+        <div class="form-row">
+          <label>更换图标（不选则保留原图标）</label>
+          <div class="file-upload">
+            <input type="file" id="editMapOverview" accept="image/*">
+            <span class="file-upload-label">选择图片</span>
+          </div>
+        </div>
+        <button type="button" class="submit-btn" onclick="new App().handleEditMap()">保存</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/app.js?v=3"></script>
 </body>
 </html>

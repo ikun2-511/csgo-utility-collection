@@ -83,10 +83,12 @@ class App {
           <h2>${m.name}</h2>
           <div class="sub">${m.en}</div>
         </div>
+        <button class="map-edit-btn" data-id="${m.id}" title="编辑">✏️</button>
+        <button class="map-delete-btn" data-id="${m.id}" title="删除">🗑</button>
       `;
       return m.ready
-        ? `<a href="${m.id}.html" class="map-card">${body}</a>`
-        : `<div class="map-card coming-soon">${body}</div>`;
+        ? `<div class="map-card-wrap"><a href="${m.id}.html" class="map-card">${body}</a></div>`
+        : `<div class="map-card-wrap"><div class="map-card coming-soon">${body}</div></div>`;
     }).join('') + `
       <div class="map-card add-card" id="addMapCard">
         <div class="add-icon">+</div>
@@ -96,6 +98,26 @@ class App {
     setTimeout(() => {
       const addCard = document.getElementById('addMapCard');
       if (addCard) addCard.addEventListener('click', () => this.showAddMapModal());
+
+      // 编辑按钮
+      grid.querySelectorAll('.map-edit-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          this.showEditMapModal(btn.dataset.id);
+        });
+      });
+
+      // 删除按钮
+      grid.querySelectorAll('.map-delete-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          if (confirm('确定删除这个地图吗？')) {
+            this.deleteMap(btn.dataset.id);
+          }
+        });
+      });
     }, 50);
   }
 
@@ -131,6 +153,57 @@ class App {
       addMap('');
     }
     document.getElementById('addMapForm').reset();
+  }
+
+  showEditMapModal(mapId) {
+    const maps = this.loadMaps();
+    const map = maps.find(m => m.id === mapId);
+    if (!map) return;
+
+    this.editingMapId = mapId;
+    document.getElementById('editMapName').value = map.name;
+    document.getElementById('editMapEn').value = map.en;
+    document.getElementById('editMapModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  handleEditMap() {
+    const name = document.getElementById('editMapName').value.trim();
+    const en = document.getElementById('editMapEn').value.trim();
+    if (!name || !en) { alert('请填写地图名称'); return; }
+
+    const maps = this.loadMaps();
+    const index = maps.findIndex(m => m.id === this.editingMapId);
+    if (index === -1) return;
+
+    const file = document.getElementById('editMapOverview').files[0];
+    const updateMap = (overview) => {
+      maps[index] = {
+        ...maps[index],
+        name,
+        en,
+        overview: overview || maps[index].overview
+      };
+      this.saveMaps(maps);
+      document.getElementById('editMapModal').classList.remove('active');
+      document.body.style.overflow = '';
+      this.renderMaps(document.getElementById('mapGrid'), maps);
+    };
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => updateMap(e.target.result);
+      reader.readAsDataURL(file);
+    } else {
+      updateMap('');
+    }
+  }
+
+  deleteMap(mapId) {
+    let maps = this.loadMaps();
+    maps = maps.filter(m => m.id !== mapId);
+    this.saveMaps(maps);
+    this.renderMaps(document.getElementById('mapGrid'), maps);
   }
 
   // ========== 导入导出 ==========

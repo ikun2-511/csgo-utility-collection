@@ -122,6 +122,52 @@ button { cursor: pointer; font-family: inherit; }
   transform: none;
 }
 
+/* ========== 地图卡片包裹 ========== */
+.map-card-wrap {
+  position: relative;
+}
+
+.map-card-wrap .map-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.map-edit-btn,
+.map-delete-btn {
+  position: absolute;
+  top: 0.4rem;
+  background: rgba(0,0,0,0.6);
+  border: none;
+  border-radius: 4px;
+  padding: 0.2rem 0.4rem;
+  font-size: 0.75rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+  cursor: pointer;
+}
+
+.map-edit-btn {
+  right: 2rem;
+}
+
+.map-delete-btn {
+  right: 0.4rem;
+}
+
+.map-card-wrap:hover .map-edit-btn,
+.map-card-wrap:hover .map-delete-btn {
+  opacity: 1;
+}
+
+.map-edit-btn:hover {
+  background: #2196f3;
+}
+
+.map-delete-btn:hover {
+  background: var(--he);
+}
+
 .landing-footer {
   margin-top: auto;
   padding-top: 3rem;
