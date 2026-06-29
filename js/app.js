@@ -3,6 +3,12 @@ const sideLabels = { ct: 'CT', t: 'T' };
 const STORAGE_PREFIX = 'csgo_';
 let appInstance = null;
 
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
 class App {
   constructor() {
     appInstance = this;
@@ -33,7 +39,15 @@ class App {
   }
 
   saveData(key, data) {
-    localStorage.setItem(STORAGE_PREFIX + key, JSON.stringify(data));
+    try {
+      localStorage.setItem(STORAGE_PREFIX + key, JSON.stringify(data));
+    } catch (e) {
+      if (e.name === 'QuotaExceededError') {
+        alert('存储空间已满，请删除一些图片后再试');
+      } else {
+        throw e;
+      }
+    }
   }
 
   async loadSpots(mapId) {
@@ -66,32 +80,24 @@ class App {
 
   saveMaps(maps) { this.saveData('maps', maps); }
 
-  bindAddMap() {
-    setTimeout(() => {
-      const addCard = document.getElementById('addMapCard');
-      if (addCard) addCard.addEventListener('click', () => this.showAddMapModal());
-    }, 50);
-  }
-
   // ========== 首页 ==========
   initIndex() {
     const grid = document.getElementById('mapGrid');
     if (!grid) return;
     const maps = this.loadMaps();
     this.renderMaps(grid, maps);
-    this.bindAddMap(grid);
   }
 
   renderMaps(grid, maps) {
     grid.innerHTML = maps.map(m => {
       const imageHtml = m.overview
-        ? `<img src="${m.overview}" alt="${m.name}">`
+        ? `<img src="${m.overview}" alt="${escapeHtml(m.name)}">`
         : `<div class="placeholder">🗺</div>`;
       const body = `
         <div class="map-card-image">${imageHtml}</div>
         <div class="map-card-body">
-          <h2>${m.name}</h2>
-          <div class="sub">${m.en}</div>
+          <h2>${escapeHtml(m.name)}</h2>
+          <div class="sub">${escapeHtml(m.en)}</div>
         </div>
         <button class="map-edit-btn" data-id="${m.id}" title="编辑">✏️</button>
         <button class="map-delete-btn" data-id="${m.id}" title="删除">🗑</button>
@@ -105,30 +111,28 @@ class App {
         <div class="add-text">添加新地图</div>
       </div>
     `;
-    setTimeout(() => {
-      const addCard = document.getElementById('addMapCard');
-      if (addCard) addCard.addEventListener('click', () => this.showAddMapModal());
 
-      // 编辑按钮
-      grid.querySelectorAll('.map-edit-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          this.showEditMapModal(btn.dataset.id);
-        });
-      });
+    // 绑定事件
+    const addCard = document.getElementById('addMapCard');
+    if (addCard) addCard.addEventListener('click', () => this.showAddMapModal());
 
-      // 删除按钮
-      grid.querySelectorAll('.map-delete-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          if (confirm('确定删除这个地图吗？')) {
-            this.deleteMap(btn.dataset.id);
-          }
-        });
+    grid.querySelectorAll('.map-edit-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.showEditMapModal(btn.dataset.id);
       });
-    }, 50);
+    });
+
+    grid.querySelectorAll('.map-delete-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (confirm('确定删除这个地图吗？')) {
+          this.deleteMap(btn.dataset.id);
+        }
+      });
+    });
   }
 
   showAddMapModal() {
@@ -150,6 +154,8 @@ class App {
       maps.push({ id, name, en, overview, ready: true });
       this.saveMaps(maps);
       document.getElementById('addMapModal').classList.remove('active');
+      document.getElementById('newMapOverview').value = '';
+      document.getElementById('newMapPreview').style.display = 'none';
       document.body.style.overflow = '';
       this.renderMaps(document.getElementById('mapGrid'), maps);
     };
@@ -157,6 +163,7 @@ class App {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => addMap(e.target.result);
+      reader.onerror = () => alert('读取图片失败');
       reader.readAsDataURL(file);
     } else {
       addMap('');
@@ -169,10 +176,21 @@ class App {
     const map = maps.find(m => m.id === mapId);
     if (!map) return;
 
-    // 存到 DOM 上，避免丢失
     document.getElementById('editMapModal').dataset.mapId = mapId;
     document.getElementById('editMapName').value = map.name;
     document.getElementById('editMapEn').value = map.en;
+
+    // 显示当前图标预览
+    const preview = document.getElementById('editMapPreview');
+    const img = preview.querySelector('img');
+    if (map.overview) {
+      img.src = map.overview;
+      preview.style.display = 'block';
+    } else {
+      preview.style.display = 'none';
+    }
+    document.getElementById('editMapOverview').value = '';
+
     document.getElementById('editMapModal').classList.add('active');
     document.body.style.overflow = 'hidden';
   }
@@ -193,18 +211,17 @@ class App {
     const file = fileInput.files[0];
 
     const doSave = (overviewData) => {
-      // 创建新对象而不是修改原对象
-      const updated = {
+      maps[index] = {
         id: maps[index].id,
         name: name,
         en: en,
         overview: overviewData || maps[index].overview || '',
         ready: maps[index].ready
       };
-      maps[index] = updated;
       this.saveMaps(maps);
       document.getElementById('editMapModal').classList.remove('active');
       document.getElementById('editMapOverview').value = '';
+      document.getElementById('editMapPreview').style.display = 'none';
       document.body.style.overflow = '';
       this.renderMaps(document.getElementById('mapGrid'), maps);
     };
@@ -223,6 +240,8 @@ class App {
     let maps = this.loadMaps();
     maps = maps.filter(m => m.id !== mapId);
     this.saveMaps(maps);
+    // 清理关联的 spots 数据
+    localStorage.removeItem(STORAGE_PREFIX + 'spots_' + mapId);
     this.renderMaps(document.getElementById('mapGrid'), maps);
   }
 
@@ -257,7 +276,6 @@ class App {
           alert('文件格式不正确');
           return;
         }
-        // 合并数据：跳过已存在的 id
         const existing = this.loadData(`spots_${mapId}`) || [];
         const existingIds = new Set(existing.map(s => s.id));
         const newSpots = data.spots.filter(s => !existingIds.has(s.id));
@@ -338,28 +356,28 @@ class App {
     }
 
     gallery.innerHTML = filtered.map(spot => `
-      <div class="spot-card" data-id="${spot.id}">
+      <div class="spot-card" data-id="${escapeHtml(spot.id)}">
         <div class="spot-card-images">
           <div class="spot-card-img">
             ${spot.images.lineup
-              ? `<img src="${spot.images.lineup}" alt="${spot.name} 站位" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="placeholder-text" style="display:none">站位截图</span>`
+              ? `<img src="${spot.images.lineup}" alt="${escapeHtml(spot.name)} 站位" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="placeholder-text" style="display:none">站位截图</span>`
               : `<span class="placeholder-text">站位截图</span>`
             }
           </div>
           <div class="spot-card-img">
             ${spot.images.result
-              ? `<img src="${spot.images.result}" alt="${spot.name} 效果" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="placeholder-text" style="display:none">效果图</span>`
+              ? `<img src="${spot.images.result}" alt="${escapeHtml(spot.name)} 效果" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="placeholder-text" style="display:none">效果图</span>`
               : `<span class="placeholder-text">效果图</span>`
             }
           </div>
         </div>
         <div class="spot-card-info">
-          <div class="spot-card-name">${spot.name}</div>
+          <div class="spot-card-name">${escapeHtml(spot.name)}</div>
           <div class="spot-card-tags">
-            <span class="spot-tag ${spot.type}">${typeLabels[spot.type]}</span>
-            <span class="spot-tag ${spot.side}">${sideLabels[spot.side]}</span>
+            <span class="spot-tag ${spot.type}">${typeLabels[spot.type] || spot.type}</span>
+            <span class="spot-tag ${spot.side}">${sideLabels[spot.side] || spot.side}</span>
           </div>
-          <button class="delete-btn" data-id="${spot.id}" title="删除">🗑</button>
+          <button class="delete-btn" data-id="${escapeHtml(spot.id)}" title="删除">🗑</button>
         </div>
       </div>
     `).join('');
@@ -409,7 +427,7 @@ class App {
     const name = document.getElementById('spotNameInput').value.trim();
     const type = document.getElementById('spotTypeInput').value;
     const side = document.getElementById('spotSideInput').value;
-    const difficulty = parseInt(document.getElementById('spotDifficultyInput').value);
+    const difficulty = parseInt(document.getElementById('spotDifficultyInput').value) || 2;
     const desc = document.getElementById('spotDescInput').value.trim();
     const stand = document.getElementById('spotStandInput').value.trim();
     const aim = document.getElementById('spotAimInput').value.trim();
@@ -427,13 +445,15 @@ class App {
       images: { lineup: lineupData || '', result: resultData || '' }
     });
 
-    const reads = [];
-    if (lineupFile) reads.push(new Promise(r => { const rd = new FileReader(); rd.onload = e => r(e.target.result); rd.readAsDataURL(lineupFile); }));
-    if (resultFile) reads.push(new Promise(r => { const rd = new FileReader(); rd.onload = e => r(e.target.result); rd.readAsDataURL(resultFile); }));
+    // 分别读取两个文件，避免顺序错乱
+    const readLineup = lineupFile
+      ? new Promise(r => { const rd = new FileReader(); rd.onload = e => r(e.target.result); rd.onerror = () => r(''); rd.readAsDataURL(lineupFile); })
+      : Promise.resolve('');
+    const readResult = resultFile
+      ? new Promise(r => { const rd = new FileReader(); rd.onload = e => r(e.target.result); rd.onerror = () => r(''); rd.readAsDataURL(resultFile); })
+      : Promise.resolve('');
 
-    Promise.all(reads).then(results => {
-      const lineupData = results[0] || '';
-      const resultData = results[1] || '';
+    Promise.all([readLineup, readResult]).then(([lineupData, resultData]) => {
       this.spots.push(buildSpot(lineupData, resultData));
       this.saveSpots(this.currentPage, this.spots);
       this.render();
@@ -465,8 +485,8 @@ class App {
     document.getElementById('modalName').textContent = spot.name;
     document.getElementById('modalDesc').textContent = spot.description;
     document.getElementById('modalTags').innerHTML = `
-      <span class="spot-tag ${spot.type}">${typeLabels[spot.type]}</span>
-      <span class="spot-tag ${spot.side}">${sideLabels[spot.side]}</span>
+      <span class="spot-tag ${spot.type}">${typeLabels[spot.type] || spot.type}</span>
+      <span class="spot-tag ${spot.side}">${sideLabels[spot.side] || spot.side}</span>
     `;
 
     const lineupImg = document.getElementById('modalLineup');

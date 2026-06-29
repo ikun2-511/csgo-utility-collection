@@ -458,7 +458,8 @@ button { cursor: pointer; font-family: inherit; }
 
 /* ========== 首页地图卡片链接 ========== */
 a.map-card {
-  display: block;
+  display: flex;
+  text-decoration: none;
 }
 
 /* ========== 添加按钮 ========== */
