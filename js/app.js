@@ -1,12 +1,15 @@
 const typeLabels = { smoke: '烟雾弹', flash: '闪光弹', molotov: '燃烧弹', he: 'HE手雷' };
 const sideLabels = { ct: 'CT', t: 'T' };
 const STORAGE_PREFIX = 'csgo_';
+let appInstance = null;
 
 class App {
   constructor() {
+    appInstance = this;
     this.spots = [];
     this.filters = { side: 'all', type: 'all' };
     this.currentPage = this.getPageName();
+    this.editingMapId = null;
     this.init();
   }
 
