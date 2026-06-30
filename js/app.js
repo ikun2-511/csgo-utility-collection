@@ -66,16 +66,29 @@ class App {
   }
 
   loadMaps() {
-    const local = this.loadData('maps');
-    if (local) return local;
     const defaults = [
       { id: 'dust2', name: '炙热沙城2', en: 'Dust2', ready: true },
       { id: 'mirage', name: '荒漠迷城', en: 'Mirage', ready: true },
       { id: 'inferno', name: '炼狱小镇', en: 'Inferno', ready: true },
       { id: 'nuke', name: '核子危机', en: 'Nuke', ready: true },
+      { id: 'anubis', name: '阿努比斯', en: 'Anubis', ready: true },
+      { id: 'ancient', name: '远古遗迹', en: 'Ancient', ready: true },
+      { id: 'vertigo', name: '殒命大厦', en: 'Vertigo', ready: true },
     ];
-    this.saveData('maps', defaults);
-    return defaults;
+    const local = this.loadData('maps');
+    if (!local) {
+      this.saveData('maps', defaults);
+      return defaults;
+    }
+    // 合并新地图到已有数据
+    const localIds = new Set(local.map(m => m.id));
+    const newMaps = defaults.filter(m => !localIds.has(m.id));
+    if (newMaps.length > 0) {
+      const merged = [...local, ...newMaps];
+      this.saveData('maps', merged);
+      return merged;
+    }
+    return local;
   }
 
   saveMaps(maps) { this.saveData('maps', maps); }
