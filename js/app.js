@@ -73,7 +73,6 @@ class App {
       { id: 'nuke', name: '核子危机', en: 'Nuke', ready: true },
       { id: 'anubis', name: '阿努比斯', en: 'Anubis', ready: true },
       { id: 'ancient', name: '远古遗迹', en: 'Ancient', ready: true },
-      { id: 'vertigo', name: '殒命大厦', en: 'Vertigo', ready: true },
     ];
     const local = this.loadData('maps');
     if (!local) {
