@@ -79,11 +79,13 @@ class App {
       this.saveData('maps', defaults);
       return defaults;
     }
-    // 合并新地图到已有数据
+    // 合并新地图 + 移除不存在的地图
+    const defaultIds = new Set(defaults.map(m => m.id));
     const localIds = new Set(local.map(m => m.id));
     const newMaps = defaults.filter(m => !localIds.has(m.id));
-    if (newMaps.length > 0) {
-      const merged = [...local, ...newMaps];
+    const filtered = local.filter(m => defaultIds.has(m.id));
+    if (newMaps.length > 0 || filtered.length !== local.length) {
+      const merged = [...filtered, ...newMaps];
       this.saveData('maps', merged);
       return merged;
     }
