@@ -144,6 +144,7 @@ button { cursor: pointer; font-family: inherit; }
   padding: 0.2rem 0.4rem;
   font-size: 0.75rem;
   opacity: 0;
+  pointer-events: none;
   transition: opacity 0.2s;
   cursor: pointer;
 }
@@ -159,6 +160,7 @@ button { cursor: pointer; font-family: inherit; }
 .map-card-wrap:hover .map-edit-btn,
 .map-card-wrap:hover .map-delete-btn {
   opacity: 1;
+  pointer-events: auto;
 }
 
 .map-edit-btn:hover {
