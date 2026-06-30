@@ -81,6 +81,7 @@ button { cursor: pointer; font-family: inherit; }
 .map-card:hover {
   border-color: var(--accent);
   transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(233, 69, 96, 0.3);
 }
 
 .map-card-image {

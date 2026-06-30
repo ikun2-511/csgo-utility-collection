@@ -70,9 +70,9 @@ class App {
     if (local) return local;
     const defaults = [
       { id: 'dust2', name: '炙热沙城2', en: 'Dust2', ready: true },
-      { id: 'mirage', name: '荒漠迷城', en: 'Mirage', ready: false },
-      { id: 'inferno', name: '炼狱小镇', en: 'Inferno', ready: false },
-      { id: 'nuke', name: '核子危机', en: 'Nuke', ready: false },
+      { id: 'mirage', name: '荒漠迷城', en: 'Mirage', ready: true },
+      { id: 'inferno', name: '炼狱小镇', en: 'Inferno', ready: true },
+      { id: 'nuke', name: '核子危机', en: 'Nuke', ready: true },
     ];
     this.saveData('maps', defaults);
     return defaults;
@@ -102,9 +102,7 @@ class App {
         <button class="map-edit-btn" data-id="${m.id}" title="编辑">✏️</button>
         <button class="map-delete-btn" data-id="${m.id}" title="删除">🗑</button>
       `;
-      return m.ready
-        ? `<div class="map-card-wrap"><a href="${m.id}.html" class="map-card">${body}</a></div>`
-        : `<div class="map-card-wrap"><div class="map-card coming-soon">${body}</div></div>`;
+      return `<div class="map-card-wrap"><a href="${m.id}.html" class="map-card">${body}</a></div>`;
     }).join('') + `
       <div class="map-card add-card" id="addMapCard">
         <div class="add-icon">+</div>
