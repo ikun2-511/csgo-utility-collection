@@ -49,8 +49,22 @@
           <button class="filter-tag he" data-filter="type" data-value="he">HE手雷</button>
         </div>
       </div>
+      <div class="filter-group view-toggle">
+        <button class="view-btn active" id="viewGrid" title="卡片视图">📋</button>
+        <button class="view-btn" id="viewMap" title="地图视图">🗺</button>
+      </div>
     </div>
 
+    <!-- 地图视图 -->
+    <div class="map-view" id="mapView" style="display:none">
+      <div class="map-container" id="mapContainer">
+        <img src="images/dust2/dust2-callouts.png" alt="Dust2 报点图" class="map-bg" id="mapBg">
+        <div class="map-overlay" id="mapOverlay"></div>
+      </div>
+      <div class="map-callout-list" id="calloutList"></div>
+    </div>
+
+    <!-- 卡片视图 -->
     <div class="gallery" id="gallery">
       <div class="loading">加载中...</div>
     </div>
