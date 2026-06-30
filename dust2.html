@@ -18,6 +18,18 @@
       </div>
     </header>
 
+    <!-- 地图概览 -->
+    <div class="map-overview" id="mapOverview">
+      <div class="map-overview-content">
+        <div class="map-overview-image" id="mapOverviewImage"></div>
+        <div class="map-overview-info">
+          <h2 id="mapOverviewName">加载中...</h2>
+          <p id="mapOverviewDesc"></p>
+          <button class="action-btn" onclick="document.getElementById('mapOverview').classList.toggle('expanded')">展开/收起地图</button>
+        </div>
+      </div>
+    </div>
+
     <div class="filter-section">
       <div class="filter-group">
         <span class="filter-label">阵营</span>

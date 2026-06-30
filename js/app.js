@@ -312,6 +312,9 @@ class App {
     if (mapInfo) {
       const titleEl = document.querySelector('.header h1');
       if (titleEl) titleEl.textContent = `${mapInfo.en} ${mapInfo.name}`;
+
+      // 更新地图概览
+      this.updateMapOverview(mapInfo);
     }
 
     this.bindFilters();
@@ -319,6 +322,23 @@ class App {
     this.bindModal();
     this.bindAddSpot();
     this.bindImportExport();
+  }
+
+  updateMapOverview(mapInfo) {
+    const nameEl = document.getElementById('mapOverviewName');
+    const descEl = document.getElementById('mapOverviewDesc');
+    const imageEl = document.getElementById('mapOverviewImage');
+
+    if (nameEl) nameEl.textContent = `${mapInfo.name} ${mapInfo.en}`;
+    if (descEl) descEl.textContent = `${this.spots.length} 个道具点位`;
+
+    if (imageEl) {
+      if (mapInfo.overview) {
+        imageEl.innerHTML = `<img src="${mapInfo.overview}" alt="${mapInfo.name}">`;
+      } else {
+        imageEl.innerHTML = `<div class="placeholder">🗺</div>`;
+      }
+    }
   }
 
   bindImportExport() {
