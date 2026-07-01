@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mirage 道具合集 - CS:GO 道具合集</title>
+  <title>Mirage 荒漠迷城 道具合集 - CS:GO 道具合集</title>
   <link rel="stylesheet" href="css/style.css?v=3">
 </head>
 <body>
@@ -18,17 +18,21 @@
       </div>
     </header>
 
-    <!-- 地图概览 -->
-    <div class="map-overview" id="mapOverview">
-      <div class="map-overview-content">
-        <div class="map-overview-image" id="mapOverviewImage"></div>
-        <div class="map-overview-info">
-          <h2 id="mapOverviewName">加载中...</h2>
-          <p id="mapOverviewDesc"></p>
-          <button class="action-btn" onclick="document.getElementById('mapOverview').classList.toggle('expanded')">展开/收起地图</button>
+    <!-- 地图点位图 -->
+    <div class="map-overview-section" id="mapOverviewSection">
+      <div class="map-overview-display" id="mapOverviewDisplay" style="display:none">
+        <img src="" alt="地图点位图" id="mapOverviewImg">
+        <button class="map-overview-change" onclick="document.getElementById('mapOverviewFile').click()">更换图片</button>
+      </div>
+      <div class="map-overview-upload" id="mapOverviewUpload">
+        <p>上传地图点位图</p>
+        <div class="file-upload">
+          <input type="file" id="mapOverviewFile" accept="image/*" onchange="uploadMapOverview(this)">
+          <span class="file-upload-label">选择图片</span>
         </div>
       </div>
     </div>
+
     <div class="filter-section">
       <div class="filter-group">
         <span class="filter-label">阵营</span>
@@ -60,10 +64,14 @@
     <div class="modal-content">
       <button class="modal-close" id="modalClose">✕</button>
       <div class="modal-body">
-        <div class="modal-images">
+        <div class="modal-images three-col">
           <div class="modal-image-box">
-            <span class="modal-image-label">站位/瞄点</span>
+            <span class="modal-image-label">站位</span>
             <img id="modalLineup" src="" alt="站位截图">
+          </div>
+          <div class="modal-image-box">
+            <span class="modal-image-label">瞄点</span>
+            <img id="modalAim" src="" alt="瞄点截图">
           </div>
           <div class="modal-image-box">
             <span class="modal-image-label">效果</span>
@@ -75,8 +83,6 @@
           <div class="modal-tags" id="modalTags"></div>
           <p id="modalDesc"></p>
           <div class="modal-lineup">
-            <div class="lineup-row"><span class="lineup-label">站位</span><span id="modalStand"></span></div>
-            <div class="lineup-row"><span class="lineup-label">瞄点</span><span id="modalAim"></span></div>
             <div class="lineup-row"><span class="lineup-label">投掷</span><span id="modalThrow"></span></div>
           </div>
         </div>
@@ -113,26 +119,8 @@
           </div>
         </div>
         <div class="form-row">
-          <label>难度 (1-3)</label>
-          <select id="spotDifficultyInput">
-            <option value="1">★☆☆ 简单</option>
-            <option value="2" selected>★★☆ 中等</option>
-            <option value="3">★★★ 困难</option>
-          </select>
-        </div>
-        <div class="form-row">
           <label>说明</label>
           <textarea id="spotDescInput" rows="2" placeholder="这个道具的用途和效果"></textarea>
-        </div>
-        <div class="form-row-double">
-          <div class="form-row">
-            <label>站位</label>
-            <input type="text" id="spotStandInput" placeholder="站在哪里">
-          </div>
-          <div class="form-row">
-            <label>瞄点</label>
-            <input type="text" id="spotAimInput" placeholder="瞄准哪里">
-          </div>
         </div>
         <div class="form-row">
           <label>投掷方式</label>
@@ -142,16 +130,32 @@
           <div class="form-row">
             <label>站位截图</label>
             <div class="file-upload">
-              <input type="file" id="spotLineupInput" accept="image/*">
+              <input type="file" id="spotLineupInput" accept="image/*" onchange="previewImage(this, 'lineupPreview')">
               <span class="file-upload-label">选择图片</span>
+            </div>
+            <div class="image-preview" id="lineupPreview" style="display:none">
+              <img src="" alt="预览">
             </div>
           </div>
           <div class="form-row">
-            <label>效果图</label>
+            <label>瞄点截图</label>
             <div class="file-upload">
-              <input type="file" id="spotResultInput" accept="image/*">
+              <input type="file" id="spotAimInput" accept="image/*" onchange="previewImage(this, 'aimPreview')">
               <span class="file-upload-label">选择图片</span>
             </div>
+            <div class="image-preview" id="aimPreview" style="display:none">
+              <img src="" alt="预览">
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <label>效果图</label>
+          <div class="file-upload">
+            <input type="file" id="spotResultInput" accept="image/*" onchange="previewImage(this, 'resultPreview')">
+            <span class="file-upload-label">选择图片</span>
+          </div>
+          <div class="image-preview" id="resultPreview" style="display:none">
+            <img src="" alt="预览">
           </div>
         </div>
         <button type="submit" class="submit-btn">添加</button>

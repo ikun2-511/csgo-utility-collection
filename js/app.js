@@ -314,6 +314,7 @@ class App {
     if (mapInfo) {
       const titleEl = document.querySelector('.header h1');
       if (titleEl) titleEl.textContent = `${mapInfo.en} ${mapInfo.name}`;
+      this.loadMapOverview(mapInfo);
     }
 
     this.bindFilters();
@@ -321,6 +322,29 @@ class App {
     this.bindModal();
     this.bindAddSpot();
     this.bindImportExport();
+  }
+
+  loadMapOverview(mapInfo) {
+    const display = document.getElementById('mapOverviewDisplay');
+    const upload = document.getElementById('mapOverviewUpload');
+    const img = document.getElementById('mapOverviewImg');
+
+    if (!display || !upload || !img) return;
+
+    // 从 localStorage 加载已保存的图片
+    const saved = this.loadData(`overview_${this.currentPage}`);
+    if (saved) {
+      img.src = saved;
+      display.style.display = 'block';
+      upload.style.display = 'none';
+    } else if (mapInfo.overview) {
+      img.src = mapInfo.overview;
+      display.style.display = 'block';
+      upload.style.display = 'none';
+    } else {
+      display.style.display = 'none';
+      upload.style.display = 'block';
+    }
   }
 
   bindImportExport() {
@@ -525,6 +549,29 @@ class App {
     const modal = document.getElementById('modal');
     if (modal) { modal.classList.remove('active'); document.body.style.overflow = ''; }
   }
+}
+
+// 全局函数：上传地图点位图
+function uploadMapOverview(input) {
+  const file = input.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const data = e.target.result;
+    // 保存到 localStorage
+    const pageName = window.location.pathname.split('/').pop().replace('.html', '');
+    localStorage.setItem(`csgo_overview_${pageName}`, JSON.stringify(data));
+
+    // 更新显示
+    const display = document.getElementById('mapOverviewDisplay');
+    const upload = document.getElementById('mapOverviewUpload');
+    const img = document.getElementById('mapOverviewImg');
+    img.src = data;
+    display.style.display = 'block';
+    upload.style.display = 'none';
+  };
+  reader.readAsDataURL(file);
 }
 
 document.addEventListener('DOMContentLoaded', () => new App());
