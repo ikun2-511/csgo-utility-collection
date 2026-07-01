@@ -529,17 +529,23 @@ class App {
 
     gallery.innerHTML = filtered.map(spot => `
       <div class="spot-card" data-id="${escapeHtml(spot.id)}">
-        <div class="spot-card-images">
+        <div class="spot-card-images three-col">
           <div class="spot-card-img">
             ${spot.images.lineup
-              ? `<img src="${spot.images.lineup}" alt="${escapeHtml(spot.name)} 站位" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="placeholder-text" style="display:none">站位截图</span>`
-              : `<span class="placeholder-text">站位截图</span>`
+              ? `<img src="${spot.images.lineup}" alt="${escapeHtml(spot.name)} 站位" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="placeholder-text" style="display:none">站位</span>`
+              : `<span class="placeholder-text">站位</span>`
+            }
+          </div>
+          <div class="spot-card-img">
+            ${spot.images.aim
+              ? `<img src="${spot.images.aim}" alt="${escapeHtml(spot.name)} 瞄点" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="placeholder-text" style="display:none">瞄点</span>`
+              : `<span class="placeholder-text">瞄点</span>`
             }
           </div>
           <div class="spot-card-img">
             ${spot.images.result
-              ? `<img src="${spot.images.result}" alt="${escapeHtml(spot.name)} 效果" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="placeholder-text" style="display:none">效果图</span>`
-              : `<span class="placeholder-text">效果图</span>`
+              ? `<img src="${spot.images.result}" alt="${escapeHtml(spot.name)} 效果" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="placeholder-text" style="display:none">效果</span>`
+              : `<span class="placeholder-text">效果</span>`
             }
           </div>
         </div>
@@ -599,39 +605,37 @@ class App {
     const name = document.getElementById('spotNameInput').value.trim();
     const type = document.getElementById('spotTypeInput').value;
     const side = document.getElementById('spotSideInput').value;
-    const difficulty = parseInt(document.getElementById('spotDifficultyInput').value) || 2;
     const desc = document.getElementById('spotDescInput').value.trim();
-    const stand = document.getElementById('spotStandInput').value.trim();
-    const aim = document.getElementById('spotAimInput').value.trim();
     const throwType = document.getElementById('spotThrowInput').value.trim();
     const lineupFile = document.getElementById('spotLineupInput').files[0];
+    const aimFile = document.getElementById('spotAimInput').files[0];
     const resultFile = document.getElementById('spotResultInput').files[0];
 
     if (!name) { alert('请填写道具名称'); return; }
 
-    const buildSpot = (lineupData, resultData) => ({
+    const buildSpot = (lineupData, aimData, resultData) => ({
       id: `${type}-${Date.now()}`,
-      name, type, side, difficulty,
+      name, type, side,
       description: desc || `${name} - ${typeLabels[type]}`,
-      lineup: { stand: stand || '无', aim: aim || '无', throw: throwType || '普通投掷' },
-      images: { lineup: lineupData || '', result: resultData || '' }
+      throw: throwType || '普通投掷',
+      images: { lineup: lineupData || '', aim: aimData || '', result: resultData || '' }
     });
 
-    // 分别读取两个文件，避免顺序错乱
-    const readLineup = lineupFile
-      ? new Promise(r => { const rd = new FileReader(); rd.onload = e => r(e.target.result); rd.onerror = () => r(''); rd.readAsDataURL(lineupFile); })
-      : Promise.resolve('');
-    const readResult = resultFile
-      ? new Promise(r => { const rd = new FileReader(); rd.onload = e => r(e.target.result); rd.onerror = () => r(''); rd.readAsDataURL(resultFile); })
+    const readFile = (file) => file
+      ? new Promise(r => { const rd = new FileReader(); rd.onload = e => r(e.target.result); rd.onerror = () => r(''); rd.readAsDataURL(file); })
       : Promise.resolve('');
 
-    Promise.all([readLineup, readResult]).then(([lineupData, resultData]) => {
-      this.spots.push(buildSpot(lineupData, resultData));
+    Promise.all([readFile(lineupFile), readFile(aimFile), readFile(resultFile)]).then(([lineupData, aimData, resultData]) => {
+      this.spots.push(buildSpot(lineupData, aimData, resultData));
       this.saveSpots(this.currentPage, this.spots);
       this.render();
       document.getElementById('addSpotModal').classList.remove('active');
       document.body.style.overflow = '';
       document.getElementById('addSpotForm').reset();
+      // 清空预览
+      document.getElementById('lineupPreview').style.display = 'none';
+      document.getElementById('aimPreview').style.display = 'none';
+      document.getElementById('resultPreview').style.display = 'none';
     });
   }
 
@@ -662,15 +666,16 @@ class App {
     `;
 
     const lineupImg = document.getElementById('modalLineup');
+    const aimImg = document.getElementById('modalAim');
     const resultImg = document.getElementById('modalResult');
     lineupImg.src = spot.images.lineup || '';
+    aimImg.src = spot.images.aim || '';
     resultImg.src = spot.images.result || '';
     lineupImg.style.display = spot.images.lineup ? '' : 'none';
+    aimImg.style.display = spot.images.aim ? '' : 'none';
     resultImg.style.display = spot.images.result ? '' : 'none';
 
-    document.getElementById('modalStand').textContent = spot.lineup.stand;
-    document.getElementById('modalAim').textContent = spot.lineup.aim;
-    document.getElementById('modalThrow').textContent = spot.lineup.throw;
+    document.getElementById('modalThrow').textContent = spot.throw || '普通投掷';
 
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';

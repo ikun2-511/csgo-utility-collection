@@ -488,6 +488,10 @@ button { cursor: pointer; font-family: inherit; }
   background: var(--border);
 }
 
+.spot-card-images.three-col {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
 .spot-card-img {
   aspect-ratio: 16/10;
   background: #252535;
@@ -586,6 +590,10 @@ button { cursor: pointer; font-family: inherit; }
   grid-template-columns: 1fr 1fr;
   gap: 2px;
   background: var(--border);
+}
+
+.modal-images.three-col {
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 .modal-image-box {
