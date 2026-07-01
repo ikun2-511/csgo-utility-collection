@@ -308,14 +308,12 @@ class App {
   // ========== 道具画廊页 ==========
   async initGallery() {
     this.spots = await this.loadSpots(this.currentPage);
-    this.callouts = await this.loadCallouts();
 
     const maps = this.loadMaps();
     const mapInfo = maps.find(m => m.id === this.currentPage);
     if (mapInfo) {
       const titleEl = document.querySelector('.header h1');
       if (titleEl) titleEl.textContent = `${mapInfo.en} ${mapInfo.name}`;
-      this.updateMapOverview(mapInfo);
     }
 
     this.bindFilters();
@@ -323,164 +321,6 @@ class App {
     this.bindModal();
     this.bindAddSpot();
     this.bindImportExport();
-    this.bindViewToggle();
-    this.renderCallouts();
-  }
-
-  async loadCallouts() {
-    try {
-      const res = await fetch(`data/${this.currentPage}-callouts.json`);
-      const data = await res.json();
-      return data.callouts || [];
-    } catch {
-      return [];
-    }
-  }
-
-  updateMapOverview(mapInfo) {
-    const nameEl = document.getElementById('mapOverviewName');
-    const descEl = document.getElementById('mapOverviewDesc');
-    const imageEl = document.getElementById('mapOverviewImage');
-
-    if (nameEl) nameEl.textContent = `${mapInfo.name} ${mapInfo.en}`;
-    if (descEl) descEl.textContent = `${this.spots.length} 个道具点位`;
-
-    if (imageEl) {
-      if (mapInfo.overview) {
-        imageEl.innerHTML = `<img src="${mapInfo.overview}" alt="${mapInfo.name}">`;
-      } else {
-        imageEl.innerHTML = `<div class="placeholder">🗺</div>`;
-      }
-    }
-  }
-
-  bindViewToggle() {
-    const gridBtn = document.getElementById('viewGrid');
-    const mapBtn = document.getElementById('viewMap');
-    const mapView = document.getElementById('mapView');
-    const gallery = document.getElementById('gallery');
-
-    if (gridBtn && mapBtn) {
-      gridBtn.addEventListener('click', () => {
-        gridBtn.classList.add('active');
-        mapBtn.classList.remove('active');
-        mapView.style.display = 'none';
-        gallery.style.display = '';
-      });
-
-      mapBtn.addEventListener('click', () => {
-        mapBtn.classList.add('active');
-        gridBtn.classList.remove('active');
-        mapView.style.display = 'flex';
-        gallery.style.display = 'none';
-      });
-    }
-  }
-
-  renderCallouts() {
-    const container = document.getElementById('calloutList');
-    const overlay = document.getElementById('mapOverlay');
-    if (!container || !overlay || this.callouts.length === 0) return;
-
-    // 统计每个报点的道具数量
-    const spotCounts = {};
-    this.spots.forEach(spot => {
-      const name = spot.lineup?.stand || '';
-      if (name) {
-        const matched = this.callouts.find(c => name.includes(c.name));
-        if (matched) {
-          spotCounts[matched.name] = (spotCounts[matched.name] || 0) + 1;
-        }
-      }
-    });
-
-    // 渲染报点列表
-    container.innerHTML = `
-      <div class="callout-list-title">地图报点 (${this.callouts.length})</div>
-      ${this.callouts.map(c => `
-        <div class="callout-item" data-name="${c.name}">
-          <span>${c.name}</span>
-          ${spotCounts[c.name] ? `<span class="spot-count">${spotCounts[c.name]} 个道具</span>` : ''}
-        </div>
-      `).join('')}
-    `;
-
-    // 渲染地图上的标记
-    overlay.innerHTML = this.callouts.map(c => `
-      <div class="map-callout ${spotCounts[c.name] ? 'has-spots' : ''}"
-           style="left:${c.x}%;top:${c.y}%"
-           data-name="${c.name}"
-           title="${c.name}${spotCounts[c.name] ? ` (${spotCounts[c.name]}个道具)` : ''}">
-        ${c.name}
-      </div>
-    `).join('');
-
-    // 绑定点击事件
-    const handleCalloutClick = (name) => {
-      // 高亮选中的报点
-      container.querySelectorAll('.callout-item').forEach(el => {
-        el.classList.toggle('active', el.dataset.name === name);
-      });
-      overlay.querySelectorAll('.map-callout').forEach(el => {
-        el.classList.toggle('active', el.dataset.name === name);
-      });
-
-      // 筛选该报点相关的道具
-      const relatedSpots = this.spots.filter(spot => {
-        const stand = spot.lineup?.stand || '';
-        return stand.includes(name);
-      });
-
-      if (relatedSpots.length > 0) {
-        // 切换到卡片视图并显示筛选结果
-        document.getElementById('viewGrid').click();
-        // 临时覆盖筛选
-        const gallery = document.getElementById('gallery');
-        gallery.innerHTML = relatedSpots.map(spot => `
-          <div class="spot-card" data-id="${escapeHtml(spot.id)}">
-            <div class="spot-card-images">
-              <div class="spot-card-img">
-                ${spot.images.lineup
-                  ? `<img src="${spot.images.lineup}" alt="${escapeHtml(spot.name)} 站位" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="placeholder-text" style="display:none">站位截图</span>`
-                  : `<span class="placeholder-text">站位截图</span>`
-                }
-              </div>
-              <div class="spot-card-img">
-                ${spot.images.result
-                  ? `<img src="${spot.images.result}" alt="${escapeHtml(spot.name)} 效果" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="placeholder-text" style="display:none">效果图</span>`
-                  : `<span class="placeholder-text">效果图</span>`
-                }
-              </div>
-            </div>
-            <div class="spot-card-info">
-              <div class="spot-card-name">${escapeHtml(spot.name)}</div>
-              <div class="spot-card-tags">
-                <span class="spot-tag ${spot.type}">${typeLabels[spot.type] || spot.type}</span>
-                <span class="spot-tag ${spot.side}">${sideLabels[spot.side] || spot.side}</span>
-              </div>
-            </div>
-          </div>
-        `).join('');
-
-        // 绑定卡片点击
-        gallery.querySelectorAll('.spot-card').forEach(card => {
-          card.addEventListener('click', () => {
-            const spot = this.spots.find(s => s.id === card.dataset.id);
-            if (spot) this.openModal(spot);
-          });
-        });
-      } else {
-        alert(`"${name}" 暂无道具数据，请先添加`);
-      }
-    };
-
-    container.querySelectorAll('.callout-item').forEach(el => {
-      el.addEventListener('click', () => handleCalloutClick(el.dataset.name));
-    });
-
-    overlay.querySelectorAll('.map-callout').forEach(el => {
-      el.addEventListener('click', () => handleCalloutClick(el.dataset.name));
-    });
   }
 
   bindImportExport() {
