@@ -186,7 +186,7 @@ button { cursor: pointer; font-family: inherit; }
 
 /* ========== 左侧地图栏 ========== */
 .map-sidebar {
-  width: 350px;
+  width: 450px;
   flex-shrink: 0;
   background: var(--bg-card);
   border-right: 1px solid var(--border);
@@ -202,11 +202,14 @@ button { cursor: pointer; font-family: inherit; }
 .map-sidebar-display {
   position: relative;
   flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
 }
 
 .map-sidebar-display img {
-  width: 100%;
-  height: auto;
+  max-width: 100%;
+  max-height: calc(100vh - 250px);
   border-radius: 8px;
   object-fit: contain;
 }
