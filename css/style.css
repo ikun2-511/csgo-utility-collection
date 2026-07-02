@@ -178,62 +178,79 @@ button { cursor: pointer; font-family: inherit; }
   font-size: 0.85rem;
 }
 
-/* ========== 工具栏（地图+筛选） ========== */
-.toolbar-section {
+/* ========== 主布局 ========== */
+.main-layout {
+  display: flex;
+  height: calc(100vh - 60px);
+}
+
+/* ========== 左侧地图栏 ========== */
+.map-sidebar {
+  width: 350px;
+  flex-shrink: 0;
   background: var(--bg-card);
-  border-bottom: 1px solid var(--border);
-  padding: 0.8rem 1.5rem;
+  border-right: 1px solid var(--border);
+  padding: 1rem;
   display: flex;
-  gap: 1.5rem;
-  align-items: center;
+  flex-direction: column;
+  position: sticky;
+  top: 60px;
+  height: calc(100vh - 60px);
+  overflow-y: auto;
 }
 
-/* ========== 地图点位图 ========== */
-.map-overview-section {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-}
-
-.map-overview-display {
+.map-sidebar-display {
   position: relative;
+  flex: 1;
 }
 
-.map-overview-display img {
-  max-width: 120px;
-  max-height: 80px;
-  border-radius: 6px;
+.map-sidebar-display img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
   object-fit: contain;
-  border: 1px solid var(--border);
 }
 
-.map-overview-change {
+.map-sidebar-change {
   position: absolute;
-  bottom: 0.2rem;
-  right: 0.2rem;
-  padding: 0.15rem 0.4rem;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  padding: 0.3rem 0.8rem;
   background: rgba(0,0,0,0.7);
   border: none;
-  border-radius: 3px;
+  border-radius: 4px;
   color: white;
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   cursor: pointer;
   opacity: 0;
   transition: opacity 0.2s;
 }
 
-.map-overview-display:hover .map-overview-change {
+.map-sidebar-display:hover .map-sidebar-change {
   opacity: 1;
 }
 
-.map-overview-change:hover {
+.map-sidebar-change:hover {
   background: var(--accent);
 }
 
-.map-overview-upload .file-upload-label {
-  padding: 0.4rem 0.8rem;
-  font-size: 0.8rem;
-  white-space: nowrap;
+.map-sidebar-upload {
+  text-align: center;
+  padding: 2rem;
+  border: 2px dashed var(--border);
+  border-radius: 8px;
+  color: var(--text-dim);
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ========== 右侧内容区 ========== */
+.content-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
 }
 
 /* ========== 头部 ========== */
@@ -255,10 +272,15 @@ button { cursor: pointer; font-family: inherit; }
 
 /* ========== 筛选区 ========== */
 .filter-section {
+  padding: 0.8rem 1.5rem;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  flex: 1;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .filter-group {
@@ -308,7 +330,7 @@ button { cursor: pointer; font-family: inherit; }
 .gallery {
   padding: 1.5rem;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1rem;
 }
 

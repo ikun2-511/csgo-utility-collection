@@ -16,16 +16,16 @@
         <button class="action-btn export-btn" id="exportBtn">📤 导出</button>
         <button class="action-btn add-btn" id="addSpotBtn">+ 添加道具</button>
       </div>
-    </header>
+        </header>
 
-    <!-- 地图点位图 + 筛选栏 -->
-    <div class="toolbar-section">
-      <div class="map-overview-section" id="mapOverviewSection">
-        <div class="map-overview-display" id="mapOverviewDisplay" style="display:none">
+    <div class="main-layout">
+      <!-- 左侧：固定地图点位图 -->
+      <div class="map-sidebar" id="mapSidebar">
+        <div class="map-sidebar-display" id="mapOverviewDisplay" style="display:none">
           <img src="" alt="地图点位图" id="mapOverviewImg">
-          <button class="map-overview-change" onclick="document.getElementById('mapOverviewFile').click()">更换图片</button>
+          <button class="map-sidebar-change" onclick="document.getElementById('mapOverviewFile').click()">更换图片</button>
         </div>
-        <div class="map-overview-upload" id="mapOverviewUpload">
+        <div class="map-sidebar-upload" id="mapOverviewUpload">
           <div class="file-upload">
             <input type="file" id="mapOverviewFile" accept="image/*" onchange="uploadMapOverview(this)">
             <span class="file-upload-label">+ 上传地图点位图</span>
@@ -33,25 +33,32 @@
         </div>
       </div>
 
-      <div class="filter-section">
-      <div class="filter-group">
-        <span class="filter-label">阵营</span>
-        <div class="filter-tags">
-          <button class="filter-tag active" data-filter="side" data-value="all">全部</button>
-          <button class="filter-tag" data-filter="side" data-value="ct">CT</button>
-          <button class="filter-tag" data-filter="side" data-value="t">T</button>
+      <!-- 右侧：筛选 + 道具列表 -->
+      <div class="content-area">
+        <div class="filter-section">
+          <div class="filter-group">
+            <span class="filter-label">阵营</span>
+            <div class="filter-tags">
+              <button class="filter-tag active" data-filter="side" data-value="all">全部</button>
+              <button class="filter-tag" data-filter="side" data-value="ct">CT</button>
+              <button class="filter-tag" data-filter="side" data-value="t">T</button>
+            </div>
+          </div>
+          <div class="filter-group">
+            <span class="filter-label">类型</span>
+            <div class="filter-tags">
+              <button class="filter-tag active" data-filter="type" data-value="all">全部</button>
+              <button class="filter-tag smoke" data-filter="type" data-value="smoke">烟雾弹</button>
+              <button class="filter-tag flash" data-filter="type" data-value="flash">闪光弹</button>
+              <button class="filter-tag molotov" data-filter="type" data-value="molotov">燃烧弹</button>
+              <button class="filter-tag he" data-filter="type" data-value="he">HE手雷</button>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="filter-group">
-        <span class="filter-label">类型</span>
-        <div class="filter-tags">
-          <button class="filter-tag active" data-filter="type" data-value="all">全部</button>
-          <button class="filter-tag smoke" data-filter="type" data-value="smoke">烟雾弹</button>
-          <button class="filter-tag flash" data-filter="type" data-value="flash">闪光弹</button>
-          <button class="filter-tag molotov" data-filter="type" data-value="molotov">燃烧弹</button>
-          <button class="filter-tag he" data-filter="type" data-value="he">HE手雷</button>
+
+        <div class="gallery" id="gallery">
+          <div class="loading">加载中...</div>
         </div>
-      </div>
       </div>
     </div>
 
