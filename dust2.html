@@ -19,7 +19,7 @@
     </header>
 
     <div class="main-layout">
-      <!-- 左侧：固定地图点位图 -->
+      <!-- 左侧：地图点位图 + 筛选 -->
       <div class="map-sidebar" id="mapSidebar">
         <div class="map-sidebar-display" id="mapOverviewDisplay" style="display:none">
           <img src="" alt="地图点位图" id="mapOverviewImg">
@@ -31,12 +31,8 @@
             <span class="file-upload-label">+ 上传地图点位图</span>
           </div>
         </div>
-      </div>
-
-      <!-- 右侧：筛选 + 道具列表 -->
-      <div class="content-area">
-        <div class="filter-section">
-          <div class="filter-group">
+        <div class="sidebar-filters">
+          <div class="sidebar-filter-group">
             <span class="filter-label">阵营</span>
             <div class="filter-tags">
               <button class="filter-tag active" data-filter="side" data-value="all">全部</button>
@@ -44,7 +40,7 @@
               <button class="filter-tag" data-filter="side" data-value="t">T</button>
             </div>
           </div>
-          <div class="filter-group">
+          <div class="sidebar-filter-group">
             <span class="filter-label">类型</span>
             <div class="filter-tags">
               <button class="filter-tag active" data-filter="type" data-value="all">全部</button>
@@ -55,7 +51,10 @@
             </div>
           </div>
         </div>
+      </div>
 
+      <!-- 右侧：道具列表 -->
+      <div class="content-area">
         <div class="gallery" id="gallery">
           <div class="loading">加载中...</div>
         </div>

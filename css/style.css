@@ -246,6 +246,38 @@ button { cursor: pointer; font-family: inherit; }
   justify-content: center;
 }
 
+/* ========== 左侧筛选栏 ========== */
+.sidebar-filters {
+  padding: 1rem 0;
+  border-top: 1px solid var(--border);
+  margin-top: 1rem;
+}
+
+.sidebar-filter-group {
+  margin-bottom: 0.8rem;
+}
+
+.sidebar-filter-group:last-child {
+  margin-bottom: 0;
+}
+
+.sidebar-filter-group .filter-label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.8rem;
+}
+
+.sidebar-filter-group .filter-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.sidebar-filter-group .filter-tag {
+  padding: 0.25rem 0.6rem;
+  font-size: 0.8rem;
+}
+
 /* ========== 右侧内容区 ========== */
 .content-area {
   flex: 1;
