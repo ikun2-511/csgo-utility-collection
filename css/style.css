@@ -426,8 +426,8 @@ button { cursor: pointer; font-family: inherit; }
 .modal-content {
   background: var(--bg-card);
   border-radius: 12px;
-  max-width: 700px;
-  width: 100%;
+  max-width: 900px;
+  width: 95%;
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
@@ -461,6 +461,7 @@ button { cursor: pointer; font-family: inherit; }
   aspect-ratio: 16/10;
   background: #252535;
   position: relative;
+  min-height: 250px;
 }
 
 .modal-image-box img {
@@ -481,7 +482,7 @@ button { cursor: pointer; font-family: inherit; }
 }
 
 .modal-info {
-  padding: 1.5rem;
+  padding: 1.5rem 2rem;
 }
 
 .modal-info h2 {
