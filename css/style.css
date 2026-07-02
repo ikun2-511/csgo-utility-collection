@@ -178,35 +178,45 @@ button { cursor: pointer; font-family: inherit; }
   font-size: 0.85rem;
 }
 
-/* ========== 地图点位图 ========== */
-.map-overview-section {
+/* ========== 工具栏（地图+筛选） ========== */
+.toolbar-section {
   background: var(--bg-card);
   border-bottom: 1px solid var(--border);
-  padding: 1rem 1.5rem;
+  padding: 0.8rem 1.5rem;
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+/* ========== 地图点位图 ========== */
+.map-overview-section {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
 }
 
 .map-overview-display {
   position: relative;
-  text-align: center;
 }
 
 .map-overview-display img {
-  max-width: 100%;
-  max-height: 400px;
-  border-radius: 8px;
+  max-width: 120px;
+  max-height: 80px;
+  border-radius: 6px;
   object-fit: contain;
+  border: 1px solid var(--border);
 }
 
 .map-overview-change {
   position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  padding: 0.3rem 0.8rem;
+  bottom: 0.2rem;
+  right: 0.2rem;
+  padding: 0.15rem 0.4rem;
   background: rgba(0,0,0,0.7);
   border: none;
-  border-radius: 4px;
+  border-radius: 3px;
   color: white;
-  font-size: 0.8rem;
+  font-size: 0.65rem;
   cursor: pointer;
   opacity: 0;
   transition: opacity 0.2s;
@@ -220,16 +230,10 @@ button { cursor: pointer; font-family: inherit; }
   background: var(--accent);
 }
 
-.map-overview-upload {
-  text-align: center;
-  padding: 2rem;
-  border: 2px dashed var(--border);
-  border-radius: 8px;
-  color: var(--text-dim);
-}
-
-.map-overview-upload p {
-  margin-bottom: 1rem;
+.map-overview-upload .file-upload-label {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+  white-space: nowrap;
 }
 
 /* ========== 头部 ========== */
@@ -251,12 +255,10 @@ button { cursor: pointer; font-family: inherit; }
 
 /* ========== 筛选区 ========== */
 .filter-section {
-  padding: 1rem 1.5rem;
-  background: var(--bg-card);
-  border-bottom: 1px solid var(--border);
   display: flex;
   flex-wrap: wrap;
-  gap: 1.2rem;
+  gap: 1rem;
+  flex: 1;
 }
 
 .filter-group {

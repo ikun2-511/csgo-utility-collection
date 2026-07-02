@@ -18,22 +18,22 @@
       </div>
     </header>
 
-    <!-- 地图点位图 -->
-    <div class="map-overview-section" id="mapOverviewSection">
-      <div class="map-overview-display" id="mapOverviewDisplay" style="display:none">
-        <img src="" alt="地图点位图" id="mapOverviewImg">
-        <button class="map-overview-change" onclick="document.getElementById('mapOverviewFile').click()">更换图片</button>
-      </div>
-      <div class="map-overview-upload" id="mapOverviewUpload">
-        <p>上传地图点位图</p>
-        <div class="file-upload">
-          <input type="file" id="mapOverviewFile" accept="image/*" onchange="uploadMapOverview(this)">
-          <span class="file-upload-label">选择图片</span>
+    <!-- 地图点位图 + 筛选栏 -->
+    <div class="toolbar-section">
+      <div class="map-overview-section" id="mapOverviewSection">
+        <div class="map-overview-display" id="mapOverviewDisplay" style="display:none">
+          <img src="" alt="地图点位图" id="mapOverviewImg">
+          <button class="map-overview-change" onclick="document.getElementById('mapOverviewFile').click()">更换图片</button>
+        </div>
+        <div class="map-overview-upload" id="mapOverviewUpload">
+          <div class="file-upload">
+            <input type="file" id="mapOverviewFile" accept="image/*" onchange="uploadMapOverview(this)">
+            <span class="file-upload-label">+ 上传地图点位图</span>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="filter-section">
+      <div class="filter-section">
       <div class="filter-group">
         <span class="filter-label">阵营</span>
         <div class="filter-tags">
@@ -51,6 +51,7 @@
           <button class="filter-tag molotov" data-filter="type" data-value="molotov">燃烧弹</button>
           <button class="filter-tag he" data-filter="type" data-value="he">HE手雷</button>
         </div>
+      </div>
       </div>
     </div>
 
