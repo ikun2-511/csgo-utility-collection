@@ -678,6 +678,27 @@ a.map-card {
 .modal-form {
   padding: 2rem;
   max-width: 500px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-form form {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.modal-form .form-row-double:last-of-type,
+.modal-form .form-row:last-of-type {
+  position: sticky;
+  bottom: 0;
+  background: var(--bg-card);
+  padding: 1rem 0;
+  margin: 0 -0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  border-top: 1px solid var(--border);
 }
 
 .modal-form h2 {
@@ -778,7 +799,15 @@ a.map-card {
   color: white;
   font-size: 1rem;
   font-weight: 500;
-  margin-top: 0.5rem;
+  margin-top: 0;
+}
+
+.modal-form .submit-btn {
+  position: sticky;
+  bottom: 0;
+  background: var(--bg-card);
+  padding: 1rem 0 0 0;
+  margin: 0;
 }
 
 .submit-btn:hover {
