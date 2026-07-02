@@ -178,6 +178,22 @@
     </div>
   </div>
 
+  <script>
+    function previewImage(input, previewId) {
+      const preview = document.getElementById(previewId);
+      const img = preview.querySelector("img");
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          img.src = e.target.result;
+          preview.style.display = "block";
+        };
+        reader.readAsDataURL(input.files[0]);
+      } else {
+        preview.style.display = "none";
+      }
+    }
+  </script>
   <script src="js/app.js?v=3"></script>
 </body>
 </html>
