@@ -574,4 +574,38 @@ function uploadMapOverview(input) {
   reader.readAsDataURL(file);
 }
 
+// 拖拽分隔条调整宽度
+document.addEventListener('DOMContentLoaded', () => {
+  const handle = document.getElementById('resizeHandle');
+  const sidebar = document.getElementById('mapSidebar');
+  const content = document.getElementById('contentArea');
+
+  if (handle && sidebar) {
+    let isResizing = false;
+
+    handle.addEventListener('mousedown', (e) => {
+      isResizing = true;
+      handle.classList.add('active');
+      document.body.style.cursor = 'col-resize';
+      document.body.style.userSelect = 'none';
+      e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isResizing) return;
+      const newWidth = Math.max(250, Math.min(e.clientX, window.innerWidth - 300));
+      sidebar.style.width = newWidth + 'px';
+    });
+
+    document.addEventListener('mouseup', () => {
+      if (isResizing) {
+        isResizing = false;
+        handle.classList.remove('active');
+        document.body.style.cursor = '';
+        document.body.style.userSelect = '';
+      }
+    });
+  }
+});
+
 document.addEventListener('DOMContentLoaded', () => new App());
